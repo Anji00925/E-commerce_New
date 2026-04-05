@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import api from '../api/axios';
+import PageTransition from '../components/PageTransition';
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -25,7 +26,8 @@ const OrderHistory = () => {
   }
 
   return (
-    <div>
+    <PageTransition>
+      <div>
       <h2 style={{ marginBottom: '2rem' }}>My Orders</h2>
       {orders.length === 0 ? (
         <p>You have no orders yet.</p>
@@ -65,6 +67,7 @@ const OrderHistory = () => {
         </div>
       )}
     </div>
+    </PageTransition>
   );
 };
 

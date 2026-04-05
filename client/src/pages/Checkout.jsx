@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import { clearCartSuccess } from '../features/cartSlice';
+import PageTransition from '../components/PageTransition';
 
 const Checkout = () => {
   const { cartItems, cartTotal } = useSelector(state => state.cart);
@@ -81,7 +82,8 @@ const Checkout = () => {
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <PageTransition>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <h2 style={{ marginBottom: '2rem' }}>Checkout</h2>
       <div className="card" style={{ padding: '2rem' }}>
         <form onSubmit={handlePlaceOrder}>
@@ -108,6 +110,7 @@ const Checkout = () => {
         </form>
       </div>
     </div>
+    </PageTransition>
   );
 };
 

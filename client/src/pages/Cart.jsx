@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import { setCartItems, removeFromCartSuccess } from '../features/cartSlice';
 import { Trash } from 'lucide-react';
+import PageTransition from '../components/PageTransition';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -41,7 +42,8 @@ const Cart = () => {
   }
 
   return (
-    <div>
+    <PageTransition>
+      <div>
       <h2 style={{ marginBottom: '2rem' }}>Shopping Cart</h2>
       {cartItems.length === 0 ? (
         <div>
@@ -97,6 +99,7 @@ const Cart = () => {
         </div>
       )}
     </div>
+    </PageTransition>
   );
 };
 

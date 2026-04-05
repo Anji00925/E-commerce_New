@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import { addToCartSuccess } from '../features/cartSlice';
+import PageTransition from '../components/PageTransition';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -54,7 +55,8 @@ const ProductDetails = () => {
   const displayPrice = product.discount_price || product.price;
 
   return (
-    <div>
+    <PageTransition>
+      <div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem' }}>
         <div style={{ flex: '1 1 400px' }}>
           <img
@@ -116,6 +118,7 @@ const ProductDetails = () => {
         </div>
       </div>
     </div>
+    </PageTransition>
   );
 };
 

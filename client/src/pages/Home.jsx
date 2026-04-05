@@ -1,6 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import api from '../api/axios';
 import ProductCard from '../components/ProductCard';
+import PageTransition from '../components/PageTransition';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 }
+};
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -50,51 +67,60 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ marginBottom: '1rem' }}>Shop Now</h1>
-        <div className="pill-container">
-          <button 
-            className={`pill ${activeFilter === 'all' ? 'active' : ''}`}
-            onClick={() => handleFilterChange('all')}
-          >
-            All Products
-          </button>
-          <button 
-            className={`pill ${activeFilter === 'deals' ? 'active' : ''}`}
-            onClick={() => handleFilterChange('deals')}
-            style={activeFilter === 'deals' ? {} : { borderColor: '#ef4444', color: '#ef4444' }}
-          >
-            🔥 Deals
-          </button>
-          {categories.map(cat => (
+    <PageTransition>
+      <div>
+        <div style={{ marginBottom: '2rem' }}>
+          <h1 style={{ marginBottom: '1rem' }}>Shop Now</h1>
+          <div className="pill-container">
             <button 
-              key={cat.id} 
-              className={`pill ${activeFilter === cat.id ? 'active' : ''}`}
-              onClick={() => handleFilterChange(cat.id)}
+              className={`pill ${activeFilter === 'all' ? 'active' : ''}`}
+              onClick={() => handleFilterChange('all')}
             >
-              {cat.name}
+              All Products
             </button>
-          ))}
+            <button 
+              className={`pill ${activeFilter === 'deals' ? 'active' : ''}`}
+              onClick={() => handleFilterChange('deals')}
+              style={activeFilter === 'deals' ? {} : { borderColor: '#ef4444', color: '#ef4444' }}
+            >
+              🔥 Deals
+            </button>
+            {categories.map(cat => (
+              <button 
+                key={cat.id} 
+                className={`pill ${activeFilter === cat.id ? 'active' : ''}`}
+                onClick={() => handleFilterChange(cat.id)}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {loading ? (
-        <div className="flex-center" style={{ height: '50vh' }}>
-          <div className="loader"></div>
-        </div>
-      ) : products.length === 0 ? (
-        <div className="card flex-center" style={{ padding: '3rem' }}>
-          <p>No products available right now for this filter.</p>
-        </div>
-      ) : (
-        <div className="product-grid">
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      )}
-    </div>
+        {loading ? (
+          <div className="flex-center" style={{ height: '50vh' }}>
+            <div className="loader"></div>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="card flex-center" style={{ padding: '3rem' }}>
+            <p>No products available right now for this filter.</p>
+          </div>
+        ) : (
+          <motion.div 
+            className="product-grid"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {products.map(product => (
+              <motion.div key={product.id} variants={itemVariants}>
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </PageTransition>
   );
 };
 

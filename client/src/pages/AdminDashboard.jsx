@@ -3,6 +3,7 @@ import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import { useSelector } from 'react-redux';
 import { Trash, Edit } from 'lucide-react';
+import PageTransition from '../components/PageTransition';
 
 const AdminDashboard = () => {
   const { user } = useSelector(state => state.auth);
@@ -145,7 +146,8 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div>
+    <PageTransition>
+      <div>
       <div className="tabs">
         <div className={`tab ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>
           Manage Products
@@ -269,6 +271,7 @@ const AdminDashboard = () => {
         </div>
       )}
     </div>
+    </PageTransition>
   );
 };
 

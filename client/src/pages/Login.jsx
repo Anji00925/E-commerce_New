@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import api from '../api/axios';
 import { loginSuccess } from '../features/authSlice';
+import PageTransition from '../components/PageTransition';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -36,7 +37,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex-center" style={{ minHeight: '60vh' }}>
+    <PageTransition>
+      <div className="flex-center" style={{ minHeight: '60vh' }}>
       <div className="card" style={{ width: '100%', maxWidth: '400px', padding: '2rem' }}>
         <h2 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>Sign In</h2>
         <form onSubmit={handleSubmit}>
@@ -67,6 +69,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </PageTransition>
   );
 };
 
